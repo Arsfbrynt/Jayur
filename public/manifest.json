@@ -1,7 +1,7 @@
 {
   "name": "JayurApp",
   "short_name": "Jayur",
-  "description": "Todo list for shopping",
+  "description": "Todo list belanja",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
