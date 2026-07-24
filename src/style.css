@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  @apply font-body text-ink;
+  background-color: #efede4;
+  background-image: radial-gradient(rgba(43, 42, 38, 0.035) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+/* Signature element: the nota card looks like a torn receipt --
+   a perforated zigzag edge at the bottom, like tearing paper off a pad. */
+.nota-card {
+  position: relative;
+  background: #fbfaf6;
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 96%,
+    97% 100%,
+    94% 96%,
+    91% 100%,
+    88% 96%,
+    85% 100%,
+    82% 96%,
+    79% 100%,
+    76% 96%,
+    73% 100%,
+    70% 96%,
+    67% 100%,
+    64% 96%,
+    61% 100%,
+    58% 96%,
+    55% 100%,
+    52% 96%,
+    49% 100%,
+    46% 96%,
+    43% 100%,
+    40% 96%,
+    37% 100%,
+    34% 96%,
+    31% 100%,
+    28% 96%,
+    25% 100%,
+    22% 96%,
+    19% 100%,
+    16% 96%,
+    13% 100%,
+    10% 96%,
+    7% 100%,
+    4% 96%,
+    1% 100%,
+    0% 96%
+  );
+  padding-bottom: 1.75rem;
+}
+
+/* Signature element: a hand-marked, slightly wobbly strikethrough for
+   checked items -- mimics crossing an item off a paper shopping list. */
+.strike-item {
+  position: relative;
+  display: inline-block;
+}
+
+.strike-item::after {
+  content: '';
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  top: 52%;
+  height: 2px;
+  background: #b23a2e;
+  transform: rotate(-1.2deg) scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.28s cubic-bezier(0.65, 0, 0.35, 1);
+  border-radius: 2px;
+}
+
+.strike-item.is-checked::after {
+  transform: rotate(-1.2deg) scaleX(1);
+}
+
+.dot-divider {
+  background-image: radial-gradient(circle, #c7c2b4 1.2px, transparent 1.2px);
+  background-size: 8px 2px;
+  background-repeat: repeat-x;
+  background-position: center;
+  height: 2px;
+}
