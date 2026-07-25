@@ -54,7 +54,6 @@ function exportFile() {
         /></svg
       >semua menu list
     </button>
-
     <div>
       <p
         class="font-mono text-xs tracking-[0.25em] text-pine/60 uppercase mb-1"
@@ -107,17 +106,23 @@ function exportFile() {
     </div>
 
     <div class="flex gap-3">
+      <StampButton
+        variant="ghost"
+        class="flex-1"
+        @click="router.push(`/list/${props.id}/edit`)"
+        >Edit</StampButton
+      >
       <StampButton variant="turmeric" class="flex-1" @click="share"
         >Share Link</StampButton
       >
-      <StampButton variant="ghost" class="flex-1" @click="exportFile"
-        >Export JSON</StampButton
-      >
     </div>
+    <StampButton variant="ghost" class="w-full" @click="exportFile"
+      >Export JSON</StampButton
+    >
   </div>
 
   <div v-else class="text-center py-20 text-ink/40">
-    <p class="font-display font-semibold mb-1">List Menu tidak ditemukan</p>
+    <p class="font-display font-semibold mb-1">Nota tidak ditemukan</p>
     <button
       class="font-mono text-xs text-pine underline mt-2"
       @click="router.push('/list')"

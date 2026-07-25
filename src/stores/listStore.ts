@@ -13,6 +13,14 @@ function uid() {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
+/** Strips Vue/Pinia reactivity (Proxy wrappers) before handing an object to
+ * Dexie. IndexedDB's structured-clone algorithm throws DataCloneError on
+ * reactive Proxies, so anything read from store state must be plain-ified
+ * before being put() back into the DB. */
+function toPlain<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value));
+}
+
 export const useListStore = defineStore("lists", {
   state: () => ({
     lists: [] as ShopList[],
@@ -75,7 +83,35 @@ export const useListStore = defineStore("lists", {
       const item = list.items.find((i: ShopItem) => i.id === itemId);
       if (!item) return;
       item.checked = !item.checked;
-      await db.lists.put(list);
+      await db.lists.put(toPlain(list));
+    },
+
+    /** Updates an existing list's title/items. Rows with a matching existing
+     * item id keep their checked state; rows without an id (newly added in
+     * the edit form) start unchecked. Items removed from `rows` are dropped. */
+    async updateList(
+      listId: string,
+      judul: string,
+      rows: { id?: string; nama: string; qty: string }[],
+    ) {
+      const list = this.byId(listId);
+      if (!list) return;
+      list.judul = judul.trim() || list.judul;
+      list.items = rows
+        .filter((r) => r.nama.trim())
+        .map((r) => {
+          const existing = r.id
+            ? list.items.find((i) => i.id === r.id)
+            : undefined;
+          return {
+            id: existing?.id ?? uid(),
+            nama: r.nama.trim(),
+            qty: r.qty.trim(),
+            checked: existing?.checked ?? false,
+          };
+        });
+      await db.lists.put(toPlain(list));
+      return list;
     },
 
     async deleteList(listId: string) {

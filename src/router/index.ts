@@ -30,6 +30,12 @@ const router = createRouter({
       props: true,
     },
     {
+      path: "/list/:id/edit",
+      name: "edit-list",
+      component: () => import("../views/EditListView.vue"),
+      props: true,
+    },
+    {
       path: "/import",
       name: "import-manual",
       component: () => import("../views/ImportView.vue"),

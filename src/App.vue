@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { RouterView } from "vue-router";
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col items-center">
+  <div class="h-screen flex flex-col items-center">
     <div class="w-full max-w-md flex-1 flex flex-col px-4 pb-10 pt-6 sm:pt-10">
       <RouterView v-slot="{ Component }">
         <transition name="page" mode="out-in">
